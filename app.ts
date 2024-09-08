@@ -5,9 +5,9 @@ const btn = document.querySelector(".btn") as HTMLButtonElement;
 
 btn.addEventListener("click", (e: Event) => {
   e.preventDefault();
-  const input = document.createElement("input")!;
+  const input = document.createElement("input");
   input.type = "text";
-  input.placeholder = "enter your skill";
+  input.placeholder = "Enter your skill";
   skillssection.appendChild(input);
 });
 
@@ -19,7 +19,11 @@ generateResumeButton.addEventListener("click", (e: Event) => {
   e.preventDefault();
 
   const nameInput = document.querySelector("#name") as HTMLInputElement;
+
   const emailInput = document.querySelector("#email") as HTMLInputElement;
+  const phoneInput = document.querySelector(
+    "#number-input"
+  ) as HTMLInputElement;
   const educationInput = document.querySelector(
     "#education"
   ) as HTMLTextAreaElement;
@@ -32,10 +36,11 @@ generateResumeButton.addEventListener("click", (e: Event) => {
   const skillsArray = [...skillsInputs];
 
   const resumeTemplate = `
-    <h1>${nameInput.value || "No Name"}</h1>
+    <h1>${nameInput.value}</h1>
     <h2>Contact Information</h2>
     <ul>
       <li>Email: ${emailInput.value || "No Email"}</li>
+      <li>Phone: ${phoneInput.value || "No Phone"}</li>
     </ul>
     <h2>Education</h2>
     <p>${educationInput.value || "No Education Information"}</p>
@@ -78,9 +83,9 @@ generateResumeButton.addEventListener("click", (e: Event) => {
   let isEditing = false;
   editButton.addEventListener("click", () => {
     if (!isEditing) {
-    
       const nameField = document.querySelector(".resume-output h1")!;
-      const emailField = document.querySelector(".resume-output ul li")!;
+      const emailField = document.querySelectorAll(".resume-output ul li")[0]!;
+      const phoneField = document.querySelectorAll(".resume-output ul li")[1]!;
       const educationField = document.querySelector(
         ".resume-output p:nth-of-type(1)"
       )!;
@@ -95,6 +100,9 @@ generateResumeButton.addEventListener("click", (e: Event) => {
       emailField.innerHTML = `Email: <input type="email" value="${emailField.textContent
         ?.replace("Email: ", "")
         .trim()}" id="edit-email" />`;
+      phoneField.innerHTML = `Phone: <input type="tel" value="${phoneField.textContent
+        ?.replace("Phone: ", "")
+        .trim()}" id="edit-phone" />`;
       educationField.innerHTML = `<textarea id="edit-education">${educationField.textContent?.trim()}</textarea>`;
       experienceField.innerHTML = `<textarea id="edit-experience">${experienceField.textContent?.trim()}</textarea>`;
 
@@ -116,6 +124,9 @@ generateResumeButton.addEventListener("click", (e: Event) => {
       const editedEmail = (
         document.querySelector("#edit-email") as HTMLInputElement
       ).value;
+      const editedPhone = (
+        document.querySelector("#edit-phone") as HTMLInputElement
+      ).value;
       const editedEducation = (
         document.querySelector("#edit-education") as HTMLTextAreaElement
       ).value;
@@ -127,7 +138,8 @@ generateResumeButton.addEventListener("click", (e: Event) => {
       ).map((input) => (input as HTMLInputElement).value);
 
       const nameField = document.querySelector(".resume-output h1")!;
-      const emailField = document.querySelector(".resume-output ul li")!;
+      const emailField = document.querySelectorAll(".resume-output ul li")[0]!;
+      const phoneField = document.querySelectorAll(".resume-output ul li")[1]!;
       const educationField = document.querySelector(
         ".resume-output p:nth-of-type(1)"
       )!;
@@ -138,10 +150,11 @@ generateResumeButton.addEventListener("click", (e: Event) => {
         ".resume-output ul:nth-of-type(2)"
       )!;
 
-      nameField.innerHTML = editedName;
-      emailField.innerHTML = `Email: ${editedEmail}`;
-      educationField.innerHTML = editedEducation;
-      experienceField.innerHTML = editedExperience;
+      nameField.textContent = editedName;
+      emailField.textContent = `Email: ${editedEmail}`;
+      phoneField.textContent = `Phone: ${editedPhone}`;
+      educationField.textContent = editedEducation;
+      experienceField.textContent = editedExperience;
 
       skillsField.innerHTML = "";
       editedSkills.forEach((skill) => {
@@ -156,5 +169,4 @@ generateResumeButton.addEventListener("click", (e: Event) => {
   });
 });
 
-
-export{}
+export {};
